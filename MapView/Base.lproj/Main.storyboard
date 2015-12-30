@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MapView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="edY-LO-Wx7">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                            </mapView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="edY-LO-Wx7" secondAttribute="bottom" id="CAl-Os-zdU"/>
+                            <constraint firstItem="edY-LO-Wx7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JId-sU-KQn"/>
+                            <constraint firstItem="edY-LO-Wx7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Sao-XW-sb4"/>
+                            <constraint firstAttribute="trailing" secondItem="edY-LO-Wx7" secondAttribute="trailing" id="Utg-3W-Nsd"/>
+                            <constraint firstItem="edY-LO-Wx7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Wda-MQ-L2H">
+                                <variation key="heightClass=regular-widthClass=compact" constant="64"/>
+                            </constraint>
+                            <constraint firstItem="edY-LO-Wx7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XEs-3A-t2N"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="edY-LO-Wx7"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="JId-sU-KQn"/>
+                                <exclude reference="Sao-XW-sb4"/>
+                                <exclude reference="Utg-3W-Nsd"/>
+                                <exclude reference="Wda-MQ-L2H"/>
+                                <exclude reference="XEs-3A-t2N"/>
+                                <exclude reference="CAl-Os-zdU"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="edY-LO-Wx7"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="JId-sU-KQn"/>
+                                <exclude reference="Sao-XW-sb4"/>
+                                <include reference="Utg-3W-Nsd"/>
+                                <include reference="Wda-MQ-L2H"/>
+                                <exclude reference="XEs-3A-t2N"/>
+                                <include reference="CAl-Os-zdU"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="edY-LO-Wx7" id="xwg-Uo-VhL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="304.5" y="349.5"/>
+        </scene>
+    </scenes>
+</document>
