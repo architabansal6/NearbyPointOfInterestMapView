@@ -411,7 +411,7 @@
 				INFOPLIST_FILE = MapView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = archita.MapView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.finalProject.me;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -426,7 +426,7 @@
 				INFOPLIST_FILE = MapView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = archita.MapView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.finalProject.me;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -499,6 +499,7 @@
 				4906A36F1C246FD900526041 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4906A3701C246FD900526041 /* Build configuration list for PBXNativeTarget "MapViewTests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +508,7 @@
 				4906A3721C246FD900526041 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4906A3731C246FD900526041 /* Build configuration list for PBXNativeTarget "MapViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +517,7 @@
 				4906A3751C246FD900526041 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

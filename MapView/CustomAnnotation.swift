@@ -24,7 +24,10 @@ class CustomAnnotation: NSObject , MKAnnotation {
     }
 
     var title: String? {
-        return name
+        if name != nil{
+             return name!
+        }
+       return name
     }
     var subtitle: String? {
         return address

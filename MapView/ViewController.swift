@@ -16,14 +16,26 @@ class ViewController: UIViewController,MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager:CLLocationManager = CLLocationManager()
-    let googleAPIKey = "AIzaSyCkXIX_OlhHIlPpdyzNsprcEkyh4Y1Co04"
-    var currentCentre : CLLocationCoordinate2D! = CLLocationCoordinate2DMake(13.0827, 80.2707){
+    let googleAPIKey = "AIzaSyBMNaT-KjtguI390tylZ6A4KOi-CiAbNK4"//"AIzaSyCkXIX_OlhHIlPpdyzNsprcEkyh4Y1Co04"
+    var currentCentre : CLLocationCoordinate2D! = CLLocationCoordinate2DMake(12.9500, 77.5900){
         willSet{
             print("willset \(currentCentre)")
         }
         didSet{
             print("didset \(currentCentre)")
-            self.searchGooglePlaces(self.type)
+           
+            var diffDist: CLLocationDistance = CLLocation(latitude: oldValue.longitude, longitude: oldValue.latitude).distanceFromLocation(CLLocation(latitude: currentCentre.longitude, longitude: currentCentre.latitude))
+            
+            if diffDist > 600.0{
+                if self.isTA{
+                    self.fetchTouristPlaces("bang")
+                }
+                else{
+                    self.searchGooglePlaces(self.type)
+                }
+                
+            }
+           
         }
         
         
@@ -31,6 +43,8 @@ class ViewController: UIViewController,MKMapViewDelegate {
     var currentDist : CLLocationDistance!
     var type = "food"
     var isSetRegion = false
+    var isTA = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +63,19 @@ class ViewController: UIViewController,MKMapViewDelegate {
 
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        
+        var location = CLLocationCoordinate2DMake(12.9500, 77.5900)
+        
+        let span = MKCoordinateSpanMake(0.15, 0.15)
+        var region = MKCoordinateRegion(center: location, span: span)
+        
+        mapView.setRegion(region, animated: true)
+        
+        
+    }
+    
     func createToolbarView(){
         
         let optionsButtonView = UIToolbar(frame: CGRect(x: 0, y: 20, width: self.view.bounds.width, height: 44))
@@ -64,11 +91,14 @@ class ViewController: UIViewController,MKMapViewDelegate {
         
         let  atmButton = UIBarButtonItem(title: "ATM", style: UIBarButtonItemStyle.Done, target: self, action: Selector("optionChoosed:"))
         atmButton.tag = 3
+        
+        let  tourAttButton = UIBarButtonItem(title: "TouristAttraction", style: UIBarButtonItemStyle.Done, target: self, action: Selector("optionChoosed:"))
+        tourAttButton.tag = 4
 
         
       //  foodButton.setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.blackColor()], forState: UIControlState.Normal)
         
-        let toolbarItems = [flexSpace,atmButton,templeButton,foodButton]
+        let toolbarItems = [flexSpace,tourAttButton,atmButton,templeButton,foodButton]
         optionsButtonView.setItems(toolbarItems, animated: false)
         self.view.addSubview(optionsButtonView)
         
@@ -82,12 +112,18 @@ class ViewController: UIViewController,MKMapViewDelegate {
         case 2:
                 self.type = "hindu_temple"
         case 3:
-                self.type = "tourist_places"
+                self.type = "atm"
+        case 4:
+            self.isTA = true
+            self.fetchTouristPlaces("bang")
+            return
+
         default:
                 break
         }
         
         self.searchGooglePlaces(self.type)
+        self.isTA = false
         
     }
     
@@ -112,7 +148,6 @@ class ViewController: UIViewController,MKMapViewDelegate {
                 
             }
             let results : NSArray = json.valueForKey("results")! as! NSArray
-            self.fetchTouristPlaces("bang")
             self.plotPositions(results)
             
             
@@ -124,7 +159,7 @@ class ViewController: UIViewController,MKMapViewDelegate {
     
     func fetchTouristPlaces(city : String){
         
-        let url = "http://localhost:8080/api/places/\(city)"
+        let url = "http://tourist-attraction.mangalmp.com/api/places/bang"
         
         var urlStr : NSString = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         
@@ -139,6 +174,8 @@ class ViewController: UIViewController,MKMapViewDelegate {
         
         // Sending Asynchronous request using NSURLConnection
         
+       
+        
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) { (response : NSURLResponse?, responseData:NSData?, error:NSError?) -> Void in
             if error != nil
             {
@@ -147,11 +184,16 @@ class ViewController: UIViewController,MKMapViewDelegate {
             }
             else
             {
-                var json : NSArray = NSArray()
+                //var json : NSArray = NSArray()
                 do{
-                    json = try NSJSONSerialization.JSONObjectWithData(responseData!, options: .MutableContainers) as! NSArray
+                     let res = response as! NSHTTPURLResponse!
+                    print("response is \(res)")
+                     let jsonString = try NSString(data: responseData!, encoding: NSUTF8StringEncoding)
+                     print("response is \(jsonString)")
+                     let json = try NSJSONSerialization.JSONObjectWithData(responseData!, options: [.AllowFragments,.MutableContainers]) as? NSArray
+                   
                     print(json)
-                    self.plotTouristSpots(json)
+                    self.plotTouristSpots(json!)
                 }
                 catch{
                     
@@ -191,6 +233,7 @@ class ViewController: UIViewController,MKMapViewDelegate {
             var customAnnotation = CustomAnnotation(name: name, address: "bang", coordinates: coordinate)
             
             self.mapView.addAnnotation(customAnnotation)
+            
 
             
         }
@@ -246,6 +289,11 @@ class ViewController: UIViewController,MKMapViewDelegate {
                imageView.image = UIImage(named: "templeIcon")
             }else if(self.type == "atm"){
                 imageView.image = UIImage(named: "atmIcon")
+            }
+            if self.isTA{
+                imageView.image = UIImage(named: "tourAttIcon")
+                print(annotation.title)
+                
             }
             annotationView.addSubview(imageView)
             annotationView.canShowCallout = true
