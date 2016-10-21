@@ -25,7 +25,6 @@ class ViewController: UIViewController,MKMapViewDelegate {
             print("didset \(currentCentre)")
            
             var diffDist: CLLocationDistance = CLLocation(latitude: oldValue.longitude, longitude: oldValue.latitude).distanceFromLocation(CLLocation(latitude: currentCentre.longitude, longitude: currentCentre.latitude))
-            
             if diffDist > 600.0{
                 if self.isTA{
                     self.fetchTouristPlaces("bang")
